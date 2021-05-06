@@ -42,7 +42,7 @@ export const LoginScreen = () => {
            flex:1
        }}>
            
-            {/* background */}
+            {/* background  */}
                 <Backgrond/> 
             {/* keyboard avoid view */}
             
@@ -97,7 +97,7 @@ export const LoginScreen = () => {
                             onPress={onLogin}
                         >
                             <Text style={styles.buttonText}>
-                            login
+                            Login2
                             </Text>
                         </TouchableOpacity>
                     </View>
