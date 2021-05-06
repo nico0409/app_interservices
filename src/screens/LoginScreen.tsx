@@ -3,7 +3,7 @@ import { Text, View, ScrollView, TextInput, Animated, TouchableOpacity, Keyboard
 import { Backgrond } from '../components/Backgrond';
 import { WhiteLogo } from '../components/WhiteLogo';
 import { UseAnimation } from '../hooks/UseAnimation';
-import Icon from 'react-native-vector-icons/dist/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 import { styles } from '../theme/loginTheme';
