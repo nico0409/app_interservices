@@ -1,4 +1,4 @@
-import React, {useState}from 'react'
+import React, {useContext, useState,useEffect}from 'react'
 import { Text, View, ScrollView, TextInput, Animated, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ToastAndroid, Keyboard } from 'react-native';
 import { Backgrond } from '../components/Backgrond';
 import { WhiteLogo } from '../components/WhiteLogo';
@@ -10,15 +10,26 @@ import { styles } from '../theme/loginTheme';
 import { color } from 'react-native-reanimated';
 import { useForm } from '../hooks/UseForm';
 import { StackScreenProps } from '@react-navigation/stack';
+import { AuthContext } from '../context/AuthContext';
+
 
 interface Props extends StackScreenProps<any,any>{}
 
 export const LoginScreen = ({navigation}:Props) => {
+    const {signIn,errorMessage,removeError} = useContext(AuthContext)
+
     const {opacity,fadeIn} =UseAnimation(0);
-    const {username,password,onChange}=useForm({
+    const {username,password,email,onChange}=useForm({
         username:'',
+        email:'',
         password:'',
     });
+
+    useEffect(() => {
+        if(errorMessage.length===0) return  
+        Alert.alert('login incorrecto',errorMessage,[{text:'ok',onPress:removeError}]);
+
+    }, [errorMessage])
     const [secureTextEntry, setsecureTextEntry] = useState(true)
   
     const showPasword=()=>{
@@ -33,8 +44,9 @@ export const LoginScreen = ({navigation}:Props) => {
     fadeIn();
 
     const onLogin=()=>{
-        console.log({username,password});
+        
         Keyboard.dismiss();
+        signIn({correo:email,password})
         
     }
     const onSignup=()=>{
@@ -59,16 +71,16 @@ export const LoginScreen = ({navigation}:Props) => {
                     <WhiteLogo />  
                     
                     <TextInput
-                    placeholder="User name"
+                    placeholder="Email"
                     placeholderTextColor= 'rgba(0,0,0,0.6)'
                     keyboardType="default"
                     style={styles.imputStyle}
                     selectionColor="white"  
                     autoCorrect={false}
                     autoCapitalize="none"
-                    textContentType="username"
-                    onChangeText={(value)=>onChange(value,"username")}
-                    value={username}
+                    textContentType="emailAddress"
+                    onChangeText={(value)=>onChange(value,"email")}
+                    value={email}
                     onSubmitEditing={onLogin}
                     />
                      <View style={styles.containerInput}>

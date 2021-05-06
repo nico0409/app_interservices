@@ -170,7 +170,7 @@ export const RegisterScreen = ({navigation}:Props) => {
                     
                      <View style={{left:'5%',top:'8%',position:'absolute',marginTop:20}}>
                              <TouchableOpacity onPress={()=>{navigation.replace("LoginScreen")
-                            console.log("entre");}
+                             ;}
                             }>
                                  <Icon
                                  name="chevron-back-outline" 

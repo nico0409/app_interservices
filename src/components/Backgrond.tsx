@@ -10,12 +10,8 @@ interface Props{
 }
 export const Backgrond = ({srcImg}:Props) => {
     const{width,height}=useWindowDimensions();
-    const {opacity,fadeIn,fadeOut} =UseAnimation(0,0.35)
-    const url=srcImg;
-  console.log(srcImg);
-  (srcImg);
-   
-fadeIn();
+    const {opacity,fadeIn,fadeOut} =UseAnimation(0,0.35);
+    fadeIn();
 
     return (
         <LinearGradient 
