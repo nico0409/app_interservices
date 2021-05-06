@@ -23,7 +23,6 @@ fadeIn();
             style={{
                 position:'absolute',
                 backgroundColor:'white',
-                //top:100,
                 width,
                 height,
 
