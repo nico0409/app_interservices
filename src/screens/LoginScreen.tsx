@@ -97,7 +97,7 @@ export const LoginScreen = () => {
                             onPress={onLogin}
                         >
                             <Text style={styles.buttonText}>
-                            Login
+                            login
                             </Text>
                         </TouchableOpacity>
                     </View>
