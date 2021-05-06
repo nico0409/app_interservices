@@ -4,11 +4,22 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Text ,View } from 'react-native';
 import { Navigator } from './src/Navigation/Navigator';
+import { AuthProvider } from './src/context/AuthContext';
 
+
+const AppState=({children}:{children:JSX.Element|JSX.Element[]})=>{
+return(
+  <AuthProvider>
+    {children}
+  </AuthProvider>
+)
+}
  const App = () => {
   return (
     <NavigationContainer>
+      <AppState>
       <Navigator/>
+      </AppState>
    </NavigationContainer>
   )
  

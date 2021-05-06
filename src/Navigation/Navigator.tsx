@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { LoginScreen } from '../screens/LoginScreen';
 import { ProtecterScreen } from '../screens/ProtecterScreen';
-import { RegistriScreen } from '../screens/RegistriScreen';
+import {  RegisterScreen } from '../screens/RegisterScreen';
 
 
 
@@ -23,7 +23,7 @@ export const Navigator=()=> {
     {/*   <Stack.Screen name="FadeInImage" component={FadeScreen} /> */} 
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="ProtecterScreen" component={ProtecterScreen} /> 
-      <Stack.Screen name="RegistriScreen" component={RegistriScreen} /> 
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} /> 
 
     </Stack.Navigator>
   );

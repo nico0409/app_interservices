@@ -9,9 +9,11 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { styles } from '../theme/loginTheme';
 import { color } from 'react-native-reanimated';
 import { useForm } from '../hooks/UseForm';
+import { StackScreenProps } from '@react-navigation/stack';
 
+interface Props extends StackScreenProps<any,any>{}
 
-export const LoginScreen = () => {
+export const LoginScreen = ({navigation}:Props) => {
     const {opacity,fadeIn} =UseAnimation(0);
     const {username,password,onChange}=useForm({
         username:'',
@@ -35,6 +37,9 @@ export const LoginScreen = () => {
         Keyboard.dismiss();
         
     }
+    const onSignup=()=>{
+
+    }
     
     return (
        <View style={{
@@ -43,7 +48,7 @@ export const LoginScreen = () => {
        }}>
            
             {/* background  */}
-                <Backgrond/> 
+                <Backgrond srcImg="../assets/istockphoto.jpg" /> 
             {/* keyboard avoid view */}
             
                 <Animated.View style={{flex:1,opacity}}>
@@ -97,7 +102,17 @@ export const LoginScreen = () => {
                             onPress={onLogin}
                         >
                             <Text style={styles.buttonText}>
-                            Login2
+                            Login
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.butonContainer}>
+                        <TouchableOpacity activeOpacity={0.3}
+                            style={styles.button}
+                            onPress={()=>navigation.replace('RegisterScreen')}
+                        >
+                            <Text style={styles.buttonText}>
+                            Sing up 
                             </Text>
                         </TouchableOpacity>
                     </View>

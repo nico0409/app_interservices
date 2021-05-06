@@ -5,11 +5,15 @@ import { color } from 'react-native-reanimated'
 import { colors } from '../theme/loginTheme'
 import { UseAnimation } from '../hooks/UseAnimation';
 
-
-export const Backgrond = () => {
+interface Props{
+    srcImg:string
+}
+export const Backgrond = ({srcImg}:Props) => {
     const{width,height}=useWindowDimensions();
     const {opacity,fadeIn,fadeOut} =UseAnimation(0,0.35)
-
+    const url=srcImg;
+  console.log(srcImg);
+  (srcImg);
    
 fadeIn();
 
@@ -30,10 +34,13 @@ fadeIn();
 
                 opacity
             }}
-            
+
             
         >
-         <Image  source={require('../assets/istockphoto.jpg')}
+         <Image 
+         source={
+             srcImg==="../assets/istockphoto.jpg"?require('../assets/istockphoto.jpg'):require('../assets/register.jpg')
+         } 
             style={{
                 
                 width:width,
