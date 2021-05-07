@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { Text,TextInput,TouchableOpacity, View, KeyboardAvoidingView, Animated, Keyboard, Platform, ToastAndroid,ScrollView } from 'react-native';
+import React, {useContext, useState,useEffect} from 'react'
+import { Text,TextInput,TouchableOpacity, View, KeyboardAvoidingView, Animated, Keyboard, Platform, ToastAndroid,ScrollView, Alert } from 'react-native';
 import { Backgrond } from '../components/Backgrond';
 import { WhiteLogo } from '../components/WhiteLogo';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,6 +11,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hooks/UseForm';
 import { UseAnimation } from '../hooks/UseAnimation';
 import { types } from '@babel/core';
+import { AuthContext } from '../context/AuthContext';
+
 
 
 interface Props extends StackScreenProps<any,any>{}
@@ -19,7 +21,7 @@ interface Props extends StackScreenProps<any,any>{}
 
 export const RegisterScreen = ({navigation}:Props) => {
     const {opacity,fadeIn} =UseAnimation(0);
-    const {username,password,confirmPassword,email,onChange}=useForm({
+    const {username:nombre,password,confirmPassword,email:correo,onChange}=useForm({
         username:'',
         password:'',
         email:'',
@@ -27,7 +29,14 @@ export const RegisterScreen = ({navigation}:Props) => {
     });
     const [secureTextEntry, setsecureTextEntry] = useState(true);
     const [confirmSecureTextEntry, setConfirmsSecureTextEntry] = useState(true);
-  
+    const {signUp,signIn,errorMessage,removeError} = useContext(AuthContext)
+
+    
+    useEffect(() => {
+        if(errorMessage.length===0) return  
+        Alert.alert('Registro incorrect ',errorMessage,[{text:'ok',onPress:removeError}]);
+
+    }, [errorMessage])
     const showPasword=(type:string)=>{
       
        
@@ -54,8 +63,11 @@ export const RegisterScreen = ({navigation}:Props) => {
         fadeIn();
 
     const onRegister=()=>{
-        console.log({username,password});
+        signUp({nombre,correo,password})
+        signIn({correo,password})
+        console.log({nombre,password});
         Keyboard.dismiss();
+
         
     }
    
@@ -91,7 +103,7 @@ export const RegisterScreen = ({navigation}:Props) => {
                      autoCapitalize="none"
                      textContentType="emailAddress"
                      onChangeText={(value)=>onChange(value,"email")}
-                     value={username}
+                     value={correo}
                      onSubmitEditing={onRegister}
                      />
                      <TextInput
@@ -104,7 +116,7 @@ export const RegisterScreen = ({navigation}:Props) => {
                      autoCapitalize="none"
                      textContentType="username"
                      onChangeText={(value)=>onChange(value,"username")}
-                     value={username}
+                     value={nombre}
                      onSubmitEditing={onRegister}
                      />
                       <View style={styles.containerInput}>

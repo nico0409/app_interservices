@@ -1,8 +1,8 @@
 import React, { createContext,useReducer,useEffect } from 'react';
-import { LoginResponse, Usuario, loginData } from '../interfaces/appInterfaces';
+import { LoginResponse, Usuario, loginData, registerData } from '../interfaces/appInterfaces';
 import { authReduer, AuthState } from './AuthReducer';
 import cafeApi from '../api/cafeApi';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 
 
@@ -11,7 +11,7 @@ type AuthContextProps={
     token:string|null;
     user:Usuario|null;
     status:'checking'|'authenticated'|'not-authenticated';
-    signUp:()=>void;
+    signUp:({nombre,correo,password}:registerData)=>void;
     signIn:({correo,password}:loginData)=>void;
     logOut:()=>void;
     removeError:()=>void;
@@ -38,9 +38,25 @@ export const AuthProvider=({children}:any)=>{
 
     const checktoken=async () => {
         const token=await AsyncStorage.getItem('token')
-        .then(token=>{
-            console.log({token})
-        }) ;
+        if (!token)return dispatch({type:'notAuthenticated'})
+        // hay token 
+
+        const resp=await cafeApi.get('/auth')
+
+            if(resp.status!==200)
+            {
+                return dispatch({type:'notAuthenticated'})
+            }
+            await AsyncStorage.setItem('token',resp.data.token)  
+        dispatch({
+            type:'signUp',
+            payload:{
+                token:resp.data.token,
+                user:resp.data.usuario
+            }
+        });
+
+
     }
 
     const  signIn   =async({correo,password}:loginData)=>{
@@ -60,8 +76,33 @@ export const AuthProvider=({children}:any)=>{
             dispatch({type:'addError',payload:error.response.data.msg||'información incorrecta'})
         }
     };
-    const  signUp      =()=>{};
-    const logOut     =()=>{};
+    const  signUp=async({nombre,correo,password}:registerData)=>{
+            try{
+                const resp=await cafeApi.post<LoginResponse>('/usuarios',{nombre,correo,password}) 
+                dispatch({
+                    type:'signUp',
+                    payload:{
+                        user:resp.data.usuario,
+                        token:resp.data.token
+                    }
+                });
+                await AsyncStorage.setItem('token',resp.data.token)   
+            }
+            catch(error)
+            {
+            console.log(error.response.data.msg)
+            dispatch({
+                type:'addError',
+                payload:error.response.data.errors[0].msg||'Revise Informacion'})
+            }
+
+    };
+    const logOut= async()=>{
+        await AsyncStorage.removeItem('token')
+        dispatch({type:'logout'})  
+
+    };
+    
     const removeError=()=>{
         dispatch({  type:'removeError', })
     };
