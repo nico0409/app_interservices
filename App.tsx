@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Text ,View } from 'react-native';
 import { Navigator } from './src/Navigation/Navigator';
 import { AuthProvider } from './src/context/AuthContext';
+import { MenuLateral } from './src/Navigation/MenuLateral';
 
 
 const AppState=({children}:{children:JSX.Element|JSX.Element[]})=>{
@@ -16,9 +17,11 @@ return(
 }
  const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <AppState>
+       
       <Navigator/>
+     
       </AppState>
    </NavigationContainer>
   )

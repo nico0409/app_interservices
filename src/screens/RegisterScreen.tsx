@@ -31,6 +31,25 @@ export const RegisterScreen = ({navigation}:Props) => {
     const [confirmSecureTextEntry, setConfirmsSecureTextEntry] = useState(true);
     const {signUp,signIn,errorMessage,removeError} = useContext(AuthContext)
 
+        const validPassword=(value:string,typePassword:"username" | "password" | "confirmPassword" | "email")=>{
+           console.log(value,typePassword);
+           
+            if(typePassword==='password' && confirmPassword.length!=0)
+            {   
+                if(value!=confirmPassword)
+                    {
+                        ToastAndroid.show("Existen diferencias entre el password y  la confirmcaion del pasword",3) 
+                    }
+            }
+            if(typePassword==='confirmPassword' && password.length!=0)
+            {   
+                if(value!=password)
+                    {
+                        ToastAndroid.show("Existen diferencias entre el password y  la confirmcaion del pasword",3) 
+                    }
+            }
+
+        }
     
     useEffect(() => {
         if(errorMessage.length===0) return  
@@ -127,9 +146,9 @@ export const RegisterScreen = ({navigation}:Props) => {
                          secureTextEntry={secureTextEntry}
                          textContentType="password"
                          autoCompleteType="password"
-                         onChangeText={(value)=>onChange(value,"password")}
+                         onChangeText={(value)=> onChange(value,'password')}
                          value={password}
-                         onSubmitEditing={onRegister}
+                         onSubmitEditing={()=>{validPassword(password,'password')}}
                          />
                          <View style={{right:'5%',position:'absolute'}}>
                              <TouchableOpacity onPress={()=>showPasword('password')}>
@@ -150,9 +169,9 @@ export const RegisterScreen = ({navigation}:Props) => {
                          secureTextEntry={confirmSecureTextEntry}
                          textContentType="password"
                          autoCompleteType="password"
-                         onChangeText={(value)=>onChange(value,"confirmPassword")}
+                         onChangeText={(value)=>onChange(value,'confirmPassword')}
                          value={confirmPassword}
-                         onSubmitEditing={onRegister}
+                         onSubmitEditing={()=>{validPassword(confirmPassword,'confirmPassword')}}
                          />
                          <View style={{right:'5%',position:'absolute'}}>
                              <TouchableOpacity 

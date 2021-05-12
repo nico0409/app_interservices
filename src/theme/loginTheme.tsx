@@ -63,10 +63,3 @@ export const styles = StyleSheet.create({
     }
     
 });
-
-
-export const  colors={
-
-fondo:'red'
-
-}
