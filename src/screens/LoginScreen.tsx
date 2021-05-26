@@ -1,22 +1,35 @@
-import React, {useState}from 'react'
+import React, {useContext, useState,useEffect}from 'react'
 import { Text, View, ScrollView, TextInput, Animated, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ToastAndroid, Keyboard } from 'react-native';
 import { Backgrond } from '../components/Backgrond';
 import { WhiteLogo } from '../components/WhiteLogo';
 import { UseAnimation } from '../hooks/UseAnimation';
-import Icon from 'react-native-vector-icons/dist/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 import { styles } from '../theme/loginTheme';
 import { color } from 'react-native-reanimated';
 import { useForm } from '../hooks/UseForm';
+import { StackScreenProps } from '@react-navigation/stack';
+import { AuthContext } from '../context/AuthContext';
 
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<any,any>{}
+
+export const LoginScreen = ({navigation}:Props) => {
+    const {signIn,errorMessage,removeError} = useContext(AuthContext)
+
     const {opacity,fadeIn} =UseAnimation(0);
-    const {username,password,onChange}=useForm({
+    const {username,password,email,onChange}=useForm({
         username:'',
+        email:'',
         password:'',
     });
+
+    useEffect(() => {
+        if(errorMessage.length===0) return  
+        Alert.alert('login incorrecto',errorMessage,[{text:'ok',onPress:removeError}]);
+
+    }, [errorMessage])
     const [secureTextEntry, setsecureTextEntry] = useState(true)
   
     const showPasword=()=>{
@@ -31,9 +44,13 @@ export const LoginScreen = () => {
     fadeIn();
 
     const onLogin=()=>{
-        console.log({username,password});
-        Keyboard.dismiss();
         
+        Keyboard.dismiss();
+        signIn({correo:email,password})
+        
+    }
+    const onSignup=()=>{
+
     }
     
     return (
@@ -42,8 +59,8 @@ export const LoginScreen = () => {
            flex:1
        }}>
            
-            {/* background */}
-                <Backgrond/> 
+            {/* background  */}
+                <Backgrond srcImg="../assets/istockphoto.jpg" /> 
             {/* keyboard avoid view */}
             
                 <Animated.View style={{flex:1,opacity}}>
@@ -54,16 +71,16 @@ export const LoginScreen = () => {
                     <WhiteLogo />  
                     
                     <TextInput
-                    placeholder="User name"
+                    placeholder="Email"
                     placeholderTextColor= 'rgba(0,0,0,0.6)'
                     keyboardType="default"
                     style={styles.imputStyle}
                     selectionColor="white"  
                     autoCorrect={false}
                     autoCapitalize="none"
-                    textContentType="username"
-                    onChangeText={(value)=>onChange(value,"username")}
-                    value={username}
+                    textContentType="emailAddress"
+                    onChangeText={(value)=>onChange(value,"email")}
+                    value={email}
                     onSubmitEditing={onLogin}
                     />
                      <View style={styles.containerInput}>
@@ -97,7 +114,17 @@ export const LoginScreen = () => {
                             onPress={onLogin}
                         >
                             <Text style={styles.buttonText}>
-                            login
+                            Login
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.butonContainer}>
+                        <TouchableOpacity activeOpacity={0.3}
+                            style={styles.button}
+                            onPress={()=>navigation.replace('RegisterScreen')}
+                        >
+                            <Text style={styles.buttonText}>
+                            Sing up 
                             </Text>
                         </TouchableOpacity>
                     </View>

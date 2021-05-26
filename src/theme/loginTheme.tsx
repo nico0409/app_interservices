@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
    },
    animatedContainer:{
        flex:1,
-       justifyContent:'center',
+        justifyContent:'center',
        alignItems:'center',
        top:'-8%'
        
@@ -63,10 +63,3 @@ export const styles = StyleSheet.create({
     }
     
 });
-
-
-export const  colors={
-
-fondo:'red'
-
-}
