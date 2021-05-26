@@ -80,7 +80,8 @@ const MenuInterno=({navigation}: DrawerContentComponentProps<DrawerContentOption
 
   return(
    
-       <DrawerContentScrollView > 
+       <DrawerContentScrollView>
+         
         {/**contenedor de avatar */}
           <View style={{...styless.avatarContainer ,marginVertical:20,marginBottom:40}}>
             <Image
@@ -127,7 +128,7 @@ const MenuInterno=({navigation}: DrawerContentComponentProps<DrawerContentOption
           
           
         </View>    
-          
+        
        </DrawerContentScrollView>  
      
   );

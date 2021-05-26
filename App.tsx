@@ -6,12 +6,15 @@ import { Text ,View } from 'react-native';
 import { Navigator } from './src/Navigation/Navigator';
 import { AuthProvider } from './src/context/AuthContext';
 import { MenuLateral } from './src/Navigation/MenuLateral';
+import { ProductsProvider } from './src/context/ProductsContexts';
 
 
 const AppState=({children}:{children:JSX.Element|JSX.Element[]})=>{
 return(
   <AuthProvider>
-    {children}
+    <ProductsProvider>
+      {children}
+    </ProductsProvider>
   </AuthProvider>
 )
 }

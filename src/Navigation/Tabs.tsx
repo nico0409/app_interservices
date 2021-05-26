@@ -13,6 +13,7 @@ import { Theme, NavigationContainer } from '@react-navigation/native';
 import { ProtecterScreen } from '../screens/ProtecterScreen';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import chatBotScreen from '../screens/chatBotScreen';
+import { ProductsNavigator } from './ProductsNavigator';
 
 
 
@@ -58,6 +59,9 @@ const TabsAndroid = () => {
               case 'chatBotScreen':
                 iconName = 'chatbubble-ellipses-outline'
               break;
+              case 'ProductsNavigator':
+                iconName = 'document-text-outline'
+              break;
 
              
             }
@@ -68,7 +72,8 @@ const TabsAndroid = () => {
     >
       <BottomTabAndroid.Screen name="Tab1Screen" options={{ title: 'Home' }} component={ Tab1Screen } />
       <BottomTabAndroid.Screen name="chatBotScreen" options={{ title: 'Chat' }} component={ chatBotScreen } />
-     <BottomTabAndroid.Screen name="ProtecterScreen" options={{ title: 'Chat' }} component={ ProtecterScreen } /> 
+     {/* <BottomTabAndroid.Screen name="ProtecterScreen" options={{ title: 'Chat' }} component={ ProtecterScreen } />  */}
+     <BottomTabAndroid.Screen name="ProductsNavigator" options={{ title: 'ISO 580' }} component={ ProductsNavigator } />
     </BottomTabAndroid.Navigator>
   
   );
@@ -107,16 +112,20 @@ const TabsIOS = () => {
             let iconName: string = '';
             switch( route.name ) {
               case 'Tab1Screen':
-                iconName = 'bulb'
+                iconName = 'home-outline'
               break;
 
-              case 'Tab2Screen':
-                iconName = 'camera'
+              case 'ProtecterScreen':
+                iconName = 'chatbubble-ellipses-outline'
+              break;
+              case 'chatBotScreen':
+                iconName = 'chatbubble-ellipses-outline'
+              break;
+              case 'ProductsNavigator':
+                iconName = 'document-text-outline'
               break;
 
-              case 'StackNavigator':
-                iconName = 'cart'
-              break;
+             
             }
 
             return <Icon name={iconName} size={20} color={color} />
@@ -124,8 +133,10 @@ const TabsIOS = () => {
         })}
       >
       {/* <Tab.Screen name="Tab1Screen" options={{ title: 'Tab1', tabBarIcon: (props) => <Text style={{ color: props.color }} >T1</Text> }} component={ Tab1Screen } /> */}
-      <BottomTabIOS.Screen name="Tab1Screen" options={{ title: 'Tab1' }} component={ Tab1Screen } />
-      <BottomTabAndroid.Screen name="ProtecterScreen" options={{ title: 'Stack' }} component={ ProtecterScreen } />
+      <BottomTabAndroid.Screen name="Tab1Screen" options={{ title: 'Home' }} component={ Tab1Screen } />
+      <BottomTabAndroid.Screen name="chatBotScreen" options={{ title: 'Chat' }} component={ chatBotScreen } />
+     {/* <BottomTabAndroid.Screen name="ProtecterScreen" options={{ title: 'Chat' }} component={ ProtecterScreen } />  */}
+     <BottomTabAndroid.Screen name="ProductsNavigator" options={{ title: 'ISO 580' }} component={ ProductsNavigator } />
 
     </BottomTabIOS.Navigator>
   );
